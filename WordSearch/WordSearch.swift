@@ -245,6 +245,10 @@ class WordSearch {
                     ctx.cgContext.addLine(to: CGPoint(x: margin + linePosition, y: margin + (CGFloat(gridSize) * gridCellSize)))
                 }
                 
+                //drawing the path
+                ctx.cgContext.setLineCap(.square)
+                ctx.cgContext.strokePath()
+                
                 //MARK:- Drawing letters
                 //start in top left corner
                 var xOffset = margin
