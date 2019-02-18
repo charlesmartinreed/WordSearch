@@ -115,4 +115,59 @@ class WordSearch {
             print("")//new line after each column
         }
     }
+    
+    private func labels(fromX x: Int, y: Int, word: String, movement: (x: Int, y: Int)) -> [Label]? {
+        //look at this position, move in this direction, for a given word
+        //if the proposed movment is valid, return the new array of labels, to replace what was previously at the position. Else, return nil
+        var returnValue = [Label]()
+        var xPosition = x
+        var yPosition = y
+        
+        for letter in word {
+            //read label from our grid
+            let label = labels[xPosition][yPosition]
+            
+            //no letter here, we can fill it
+            if label.letter == " " || label.letter == letter {
+                returnValue.append(label)
+                
+                //shift the letter check as directed
+                xPosition += movement.x
+                yPosition += movement.y
+            } else {
+                return nil
+            }
+        }
+        return returnValue
+    }
+    
+    private func tryPlacing(_ word: String, movement: (x: Int, y: Int)) -> Bool {
+        //start at a random position and try placing from there
+        let xLength = (movement.x * (word.count - 1))
+        let yLength = (movement.y * (word.count - 1))
+        
+        //get a random array of number and try to position the word at each place
+        let rows = (0 ..< gridSize).shuffled()
+        let cols = (0 ..< gridSize).shuffled()
+        
+        for row in rows {
+            for col in cols {
+                let finalX = col + xLength
+                let finalY = row + yLength
+                
+                //is value inside grid?
+                if finalX >= 0 && finalX < gridSize && finalY >= 0 && finalY < gridSize {
+                    //try and read the labels and place the words
+                    if let returnValue = labels(fromX: col, y: row, word: word, movement: movement) {
+                        //if we're here, the word can be placed
+                        for (index, letter) in word.enumerated() {
+                            returnValue[index].letter = letter
+                        }
+                        return true
+                    }
+                }
+            }
+        }
+        return false //couldn't place the word for any the given movement type
+    }
 }
