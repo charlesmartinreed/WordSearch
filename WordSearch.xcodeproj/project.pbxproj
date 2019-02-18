@@ -14,6 +14,7 @@
 		8CC0B43C221B426000D112AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CC0B43A221B426000D112AE /* LaunchScreen.storyboard */; };
 		8CC0B447221B426000D112AE /* WordSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC0B446221B426000D112AE /* WordSearchTests.swift */; };
 		8CC0B452221B428200D112AE /* WordSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC0B451221B428200D112AE /* WordSearch.swift */; };
+		8CC0B454221B4D4C00D112AE /* capitals.json in Resources */ = {isa = PBXBuildFile; fileRef = 8CC0B453221B4D4C00D112AE /* capitals.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		8CC0B446221B426000D112AE /* WordSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSearchTests.swift; sourceTree = "<group>"; };
 		8CC0B448221B426000D112AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CC0B451221B428200D112AE /* WordSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSearch.swift; sourceTree = "<group>"; };
+		8CC0B453221B4D4C00D112AE /* capitals.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capitals.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				8CC0B43A221B426000D112AE /* LaunchScreen.storyboard */,
 				8CC0B43D221B426000D112AE /* Info.plist */,
 				8CC0B451221B428200D112AE /* WordSearch.swift */,
+				8CC0B453221B4D4C00D112AE /* capitals.json */,
 			);
 			path = WordSearch;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			files = (
 				8CC0B43C221B426000D112AE /* LaunchScreen.storyboard in Resources */,
 				8CC0B439221B426000D112AE /* Assets.xcassets in Resources */,
+				8CC0B454221B4D4C00D112AE /* capitals.json in Resources */,
 				8CC0B437221B425C00D112AE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
