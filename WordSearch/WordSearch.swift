@@ -79,7 +79,7 @@ class WordSearch {
     
     //must be reference type because we need to have shared ownership - character wrapped in a class
     var labels = [[Label]]()
-    var difficulty = Difficulty.easy
+    var difficulty = Difficulty.hard
     var numberOfPages = 10
     
     //65-90 is ASCII for A...Z. We end up with an array of characters of such.
@@ -202,5 +202,74 @@ class WordSearch {
 //    }
         //filter takes our function, returns true or false from our place. The values that pass our place function
         return words.shuffled().filter(place)
+    }
+    
+    //MARK:- Rendering the PDF
+    func render() -> Data {
+        //how big the page should be - A4 size
+        let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
+        let margin = pageRect.width / 10
+        
+        let availableSpace = pageRect.width - (margin * 2)
+        let gridCellSize = availableSpace / CGFloat(gridSize) //square size
+        
+        //letters should be rendered in the center of the grid
+        let gridLetterFont = UIFont.systemFont(ofSize: 16)
+        let gridLetterStyle = NSMutableParagraphStyle()
+        gridLetterStyle.alignment = .center
+        
+        let gridLetterAttributes: [NSAttributedString.Key: Any] = [
+            .font: gridLetterFont,
+            .paragraphStyle: gridLetterStyle
+        ]
+        
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect)
+        return renderer.pdfData { ctx in
+            //returns the output from the PDF being rendered - we're making unique instances of the word search
+            for _ in 0 ..< numberOfPages {
+                ctx.beginPage()
+                
+                //get a grid
+                _ = makeGrid()
+                
+                //write to the grid
+                for i in 0 ... gridSize {
+                    let linePosition = CGFloat(i) * gridCellSize
+                    
+                    //across
+                    ctx.cgContext.move(to: CGPoint(x: margin, y: margin + linePosition))
+                    ctx.cgContext.addLine(to: CGPoint(x: margin + (CGFloat(gridSize) * gridCellSize), y: margin + linePosition))
+                    
+                    //down
+                    ctx.cgContext.move(to: CGPoint(x: margin + linePosition, y: margin))
+                    ctx.cgContext.addLine(to: CGPoint(x: margin + linePosition, y: margin + (CGFloat(gridSize) * gridCellSize)))
+                }
+                
+                //MARK:- Drawing letters
+                //start in top left corner
+                var xOffset = margin
+                var yOffset = margin
+                
+                for column in labels {
+                    for label in column {
+                        //read letter, figure out size to render it at to center it vertically
+                        //we need String here because Characters don't have size
+                        let size = String(label.letter).size(withAttributes: gridLetterAttributes)
+                        let yPosition = (gridCellSize - size.height) / 2
+                        let cellRect = CGRect(x: xOffset, y: yOffset + yPosition, width: gridCellSize, height: gridCellSize)
+                        
+                        //draw string into space
+                        String(label.letter).draw(in: cellRect, withAttributes: gridLetterAttributes)
+                        
+                        //move to the next space
+                        xOffset += gridCellSize
+                    }
+                    
+                    //after finishing, move to the next line down
+                    xOffset = margin
+                    yOffset += gridCellSize
+                }
+            }
+        }
     }
 }

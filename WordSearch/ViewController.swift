@@ -21,13 +21,27 @@ class ViewController: UIViewController {
                 
                 let wordSearch = WordSearch()
                 wordSearch.words = words
-                wordSearch.makeGrid()
+                
+                let output = wordSearch.render()
+                let url = getDocumentsDirectory().appendingPathComponent("output.pdf")
+                try output.write(to: url)
+                print(url)
+                
             } catch {
                 fatalError("could not parse JSON")
             }
-            
-            
         }
+    }
+    
+    func renderPDFfrom(words: [Word]) {
+        
+    }
+    
+    
+    func getDocumentsDirectory() -> URL {
+        //find where the user's documents are stored for our app
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 
 
