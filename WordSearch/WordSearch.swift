@@ -93,6 +93,7 @@ class WordSearch {
         }
         
         //search through labels, find empty spaces, insert a letter from the allLetters array
+        placeWords()
         fillGaps()
         printGrid() //debug for seeing the grid
     }
@@ -183,7 +184,23 @@ class WordSearch {
         return difficulty.placementTypes.contains {
             tryPlacing(formattedWord, movement: $0.movement)
         }
-        
-        return false
+        //return false
+    }
+    
+    private func placeWords() -> [Word] {
+        //get the words we used in words and display the hints for them
+//        words.shuffle()
+//        var usedWords = [Word]()
+//
+//        for word in words {
+//            if place(word) { //place -> tryPLacing -> labels
+//                usedWords.append(word)
+//            }
+//        }
+//
+//        return usedWords
+//    }
+        //filter takes our function, returns true or false from our place. The values that pass our place function
+        return words.shuffled().filter(place)
     }
 }
