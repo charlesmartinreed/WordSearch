@@ -49,7 +49,7 @@ enum Difficulty {
     case medium
     case hard
     
-    var placement: [PlacementType] {
+    var placementTypes: [PlacementType] {
         switch self {
         case .easy:
             return [.leftRight, .upDown].shuffled()
@@ -169,5 +169,21 @@ class WordSearch {
             }
         }
         return false //couldn't place the word for any the given movement type
+    }
+    
+    private func place(_ word: Word) -> Bool {
+        let formattedWord = word.text.replacingOccurrences(of: " ", with: "").uppercased() //all uppercased makes this a little more difficult
+        
+//        for type in difficulty.placementTypes {
+//            if tryPlacing(formattedWord, movement: type.movement) {
+//                return true
+//            }
+//        }
+        
+        return difficulty.placementTypes.contains {
+            tryPlacing(formattedWord, movement: $0.movement)
+        }
+        
+        return false
     }
 }
